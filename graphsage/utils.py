@@ -63,15 +63,21 @@ def load_data(prefix, normalize=True, load_walks=False):
         from sklearn.preprocessing import StandardScaler
         train_ids = np.array([id_map[n] for n in G.nodes() if not G.node[n]['val'] and not G.node[n]['test']])
         train_feats = feats[train_ids]
+        print(feats[890])
         scaler = StandardScaler()
         scaler.fit(train_feats)
         feats = scaler.transform(feats)
+        print(feats[890])
     
     if load_walks:
         with open(prefix + "-walks.txt") as fp:
             for line in fp:
                 walks.append(map(conversion, line.split()))
 
+    #print('id_map:', id_map)
+    #print('class_map:', class_map)
+
+    print(feats.shape)
     return G, feats, id_map, walks, class_map
 
 def run_random_walks(G, nodes, num_walks=N_WALKS):

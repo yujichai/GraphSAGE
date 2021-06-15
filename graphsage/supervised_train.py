@@ -134,6 +134,8 @@ def train(train_data, test_data=None):
         # pad with dummy zero vector
         features = np.vstack([features, np.zeros((features.shape[1],))])
 
+    print(features.shape)
+
     context_pairs = train_data[3] if FLAGS.random_context else None
     placeholders = construct_placeholders(num_classes)
     minibatch = NodeMinibatchIterator(G, 
@@ -238,6 +240,8 @@ def train(train_data, test_data=None):
     else:
         raise Exception('Error: model name unrecognized.')
 
+    #'''
+
     config = tf.ConfigProto(log_device_placement=FLAGS.log_device_placement)
     config.gpu_options.allow_growth = True
     #config.gpu_options.per_process_gpu_memory_fraction = GPU_MEM_FRACTION
@@ -328,6 +332,8 @@ def train(train_data, test_data=None):
     with open(log_dir() + "test_stats.txt", "w") as fp:
         fp.write("loss={:.5f} f1_micro={:.5f} f1_macro={:.5f}".
                 format(val_cost, val_f1_mic, val_f1_mac))
+
+    #'''
 
 def main(argv=None):
     print("Loading training data..")
